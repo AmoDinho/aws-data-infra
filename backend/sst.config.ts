@@ -1,5 +1,5 @@
 import { SSTConfig } from 'sst';
-import ServiceOneStack from './stacks/serviceOne';
+import DealershipsStack from './stacks/dealerships';
 export default {
   config(_input) {
     return {
@@ -8,6 +8,6 @@ export default {
     };
   },
   stacks(app) {
-    app.stack(ServiceOneStack);
+    app.stack(DealershipsStack);
   },
 } satisfies SSTConfig;
