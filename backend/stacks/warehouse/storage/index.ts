@@ -13,7 +13,19 @@ export const WarehouseBucket = ({
   stack,
   app,
 }: StackContext): IWarehouseBucket => {
-  const WarehouseBucket = new Bucket(stack, `warehouse-bucket`);
+  const WarehouseBucket = new Bucket(stack, `warehouse-bucket`, {
+    cors: true,
+    notifications: {
+      objectCreatedNotification: {
+        function: {
+          handler:
+            'backend/warehouse/storage/index.objectCreatedNotificationHandler',
+          permissions: ['events:PutEvents', 's3:*'],
+        },
+        events: ['object_created'],
+      },
+    },
+  });
   return {
     WarehouseBucket,
   };
