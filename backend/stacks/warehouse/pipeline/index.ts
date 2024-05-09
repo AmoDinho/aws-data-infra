@@ -5,6 +5,7 @@ export interface IPipeline {
   RunPipelineCron: Cron;
 }
 
+// this will trigger athena to update the tables with new export data
 export const PipelineEventHandler = ({ stack }: StackContext): Function => {
   return new Function(stack, `${stackPrefixes.dataInfra}-pipe-event-handler`, {
     handler: 'backend/warehouse/pipeline/index.PipelineEventHandler',
@@ -18,15 +19,25 @@ export const PipelineEventHandler = ({ stack }: StackContext): Function => {
   });
 };
 
-export const RunPipelineCron = ({ stack }: StackContext): Function => {
-  return new Function(stack, `${stackPrefixes.dataInfra}-pipeline-cron`, {
-    handler: 'backend/warehouse/pipeline/index.PipelineCron',
-    permissions: [
-      'sts:AssumeRole',
-      'events:PutEvents',
-      'athena:*',
-      's3:*',
-      'glue:*',
-    ],
+//this will tell dynamo to export the data to an s3 bucket
+const RunPipelineCron = ({ stack }: StackContext): Cron => {
+  const cron = new Cron(stack, `${stackPrefixes.dataInfra}-pipeline-cron`, {
+    schedule: 'rate(1 hour)',
+    job: 'backend/warehouse/pipeline/index.RunPipelineCron',
   });
+  cron.attachPermissions([
+    'sts:AssumeRole',
+    'events:PutEvents',
+    'athena:*',
+    's3:*',
+    'glue:*',
+  ]);
+  return cron;
+};
+
+export const Pipeline = (stackContext: StackContext): IPipeline => {
+  return {
+    RunPipelineCron: RunPipelineCron(stackContext),
+    PipelineEventHandler: PipelineEventHandler(stackContext),
+  };
 };
