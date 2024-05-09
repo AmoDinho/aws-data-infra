@@ -18,3 +18,5 @@ const Bus = (
 
   return { eventBus };
 };
+
+export default Bus;
