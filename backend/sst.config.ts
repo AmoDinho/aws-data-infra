@@ -3,7 +3,7 @@ import ServiceOneStack from './stacks/serviceOne';
 export default {
   config(_input) {
     return {
-      name: 'serverless-apollo',
+      name: 'aws-data-infra',
       region: 'eu-west-1',
     };
   },
