@@ -8,72 +8,204 @@ const dealershipSchema = (baseKey: string) => {
         type: 'object',
         properties: {
           pk: {
-            S: '',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           sk: {
-            S: '',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           car_id: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           model: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           title: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           make: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           condition: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           price: {
             N: '9909.22',
           },
           year: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           transmission: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           sold_by: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           user_id: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           dealership_id: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           dealership_name: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           dealership_lat: {
-            N: '23.9883',
+            type: 'object',
+            properties: {
+              N: {
+                type: 'string',
+              },
+            },
+            required: ['N'],
           },
           dealership_lng: {
-            N: '093.333',
+            type: 'object',
+            properties: {
+              N: {
+                type: 'string',
+              },
+            },
+            required: ['N'],
           },
           created_at: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           updated_at: {
-            S: 'string',
+            type: 'object',
+            properties: {
+              S: {
+                type: 'string',
+              },
+            },
+            required: ['S'],
           },
           milage: {
-            N: '23443.33',
+            type: 'object',
+            properties: {
+              N: {
+                type: 'string',
+              },
+            },
+            required: ['N'],
           },
           seller_info: {
-            M: {
-              name: {
-                S: 'String',
-              },
-              surname: {
-                S: 'String',
-              },
-              number: {
-                N: '7889809',
+            type: 'object',
+            properties: {
+              M: {
+                type: 'object',
+                properties: {
+                  name: {
+                    type: 'object',
+                    properties: {
+                      S: {
+                        type: 'string',
+                      },
+                    },
+                    required: ['S'],
+                  },
+                  surname: {
+                    type: 'object',
+                    properties: {
+                      S: {
+                        type: 'string',
+                      },
+                    },
+                    required: ['S'],
+                  },
+                  number: {
+                    type: 'object',
+                    properties: {
+                      N: {
+                        type: 'string',
+                      },
+                    },
+                    required: ['N'],
+                  },
+                },
               },
             },
           },
