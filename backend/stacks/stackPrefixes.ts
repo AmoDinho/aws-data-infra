@@ -1,5 +1,5 @@
 const prefixes = {
-  dataInfra: 'data_infra_project',
+  dataInfra: 'data-stack',
 };
 
 export default prefixes;

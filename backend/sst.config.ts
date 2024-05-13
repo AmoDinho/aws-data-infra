@@ -11,7 +11,9 @@ export default {
     };
   },
   stacks(app) {
-    app.stack(DealershipsStack, { id: `${stackPrefixes.dataInfra}dealership` });
+    app.stack(DealershipsStack, {
+      id: `${stackPrefixes.dataInfra}-dealership`,
+    });
     app.stack(stack, { id: `${stackPrefixes.dataInfra}-warehouse-infra` });
   },
 } satisfies SSTConfig;
