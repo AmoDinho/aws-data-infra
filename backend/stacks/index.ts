@@ -16,6 +16,16 @@ export function stack(stackContext: StackContext) {
   stackContext.stack.addDefaultFunctionBinding([eventBusNameParameter]);
   const warehouse = Warehouse(stackContext);
   const pipeline = Pipeline(stackContext);
+  /// Bind the finctions that will write to s3 & glue tables
+
+  pipeline.RunPipelineCron.bind([
+    warehouse.Warehouse.WarehouseBucket,
+    warehouse.Glue.GlueDBName,
+  ]);
+  pipeline.PipelineEventHandler.bind([
+    warehouse.Warehouse.WarehouseBucket,
+    warehouse.Glue.GlueDBName,
+  ]);
   Bus(stackContext, {
     eventBusName: eventBusName,
     warehouse: warehouse,

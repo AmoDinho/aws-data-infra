@@ -53,7 +53,7 @@ export const Glue = (
   };
 
   //roles
-  const glue_managed_policy = `arn:aws:iam::aws:polucy/service-role/AWSGlueServiceRole`;
+  const glue_managed_policy = `arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole`;
   const s3_managed_policy = `arn:aws:iam::aws:policy/AmazonS3FullAccess`;
   const glue_service_url = `glue.amazonaws.com`;
   new iam.Role(stack, `${stackPrefixes.dataInfra}-glue-role`, {
