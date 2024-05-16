@@ -10,7 +10,7 @@ import {
   PutObjectCommandInput,
   S3Client,
 } from '@aws-sdk/client-s3';
-import { ISignedURLParam } from './../types/interfaces';
+import { ISignedURLParam } from '../types/interfaces';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 type IGetS3Args = {

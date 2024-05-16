@@ -7,9 +7,9 @@ export interface IServiceOneAPIResource {
 const ServiceOneAPI = (Stack: Construct): Api => {
   const ServiceOneAPI = new Api(Stack, `ServiceOne-stack-api`, {
     routes: {
-      'POST /ServiceOne-graphql': {
+      'POST /dealerships-graphql': {
         type: 'graphql',
-        function: 'packages/ServiceOne/__graphql/index.handler',
+        function: 'backend/dealerships/__graphql/index.handler',
       },
       // pothos: {
       //   schema: 'packages/ServiceOne/__graphql/schema.ts',
