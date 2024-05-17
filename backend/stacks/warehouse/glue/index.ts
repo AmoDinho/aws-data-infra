@@ -5,6 +5,7 @@ import { Parameter } from 'sst/constructs/Parameter';
 import { IWarehouseBucket } from '../storage';
 import stackPrefixes from '../../stackPrefixes';
 import dealershipSchema from './schemas/dealerships';
+import { cleanedDealershipSchema } from './schemas/cleanedDealership';
 export interface IGlue {
   GlueRegistry: glue.CfnRegistry;
   GlueDatabase: glue.CfnDatabase;
@@ -15,7 +16,7 @@ export const Glue = (
   { stack, app }: StackContext,
   storage: IWarehouseBucket
 ): IGlue => {
-  const dbName = `${stackPrefixes.dataInfra}`;
+  const dbName = `${stackPrefixes.dataInfra}-remix`;
 
   //warehouse db
   const glueDatabase = new glue.CfnDatabase(stack, `${dbName}`, {
@@ -25,6 +26,7 @@ export const Glue = (
     },
   });
 
+  // console.log('glueDatabase', glueDatabase);
   //warehouse db name parameter
   const glueDBName = new Config.Parameter(
     stack,
@@ -37,7 +39,7 @@ export const Glue = (
   //Bronze database table source names
   const warehousesStorageBucket = `s3://${storage.WarehouseBucket.bucketName}`;
 
-  const PreprocessDynamoDBSource = {
+  const preProcessedDynamoDBSource = {
     name: 'dealership',
     mainName: 'dealership',
     location: `${warehousesStorageBucket}/preprocessed/exports/dealerships/_latest/data/`,
@@ -45,10 +47,22 @@ export const Glue = (
     schemaVerisonNumber: 1,
   };
 
-  const cleanedTables = {
-    name: 'dealership',
-    storageDescriptor: {
-      location: `${warehousesStorageBucket}/athena/cleaned/dealerships`,
+  const postProcessedDataSource = {
+    tableConfig: {
+      tableInput: {
+        name: 'dealership',
+        tableType: 'EXTERNAL_TABLE',
+        storageDescriptor: {
+          location: `${warehousesStorageBucket}/athena/cleaned/dealerships`,
+          columns: cleanedDealershipSchema,
+        },
+      },
+      openTableFormatInput: {
+        icebergInput: {
+          metadataOperation: 'CREATE',
+          version: '2',
+        },
+      },
     },
   };
 
@@ -86,39 +100,39 @@ export const Glue = (
   const schemaProps = {
     compatibility: 'BACKWARD',
     dataFormat: 'JSON',
-    name: PreprocessDynamoDBSource.name,
-    schemaDefinition: JSON.stringify(PreprocessDynamoDBSource.schema),
+    name: preProcessedDynamoDBSource.name,
+    schemaDefinition: JSON.stringify(preProcessedDynamoDBSource.schema),
     registry: {
       arn: glueRegistry.attrArn,
     },
     checkpointVersion: {
-      versionNumber: PreprocessDynamoDBSource.schemaVerisonNumber,
+      versionNumber: preProcessedDynamoDBSource.schemaVerisonNumber,
     },
   };
 
   const cfnSchema = new glue.CfnSchema(
     stack,
-    `${stackPrefixes.dataInfra}-schema-${PreprocessDynamoDBSource.name}`,
+    `${stackPrefixes.dataInfra}-schema-${preProcessedDynamoDBSource.name}`,
     schemaProps
   );
 
   //base table
   new glue.CfnTable(
     stack,
-    `${stackPrefixes.dataInfra}-table-${PreprocessDynamoDBSource.name}`,
+    `${stackPrefixes.dataInfra}-table-base-${preProcessedDynamoDBSource.name}`,
     {
-      catalogId: stack.account,
-      databaseName: dbName,
+      catalogId: `${stack.account}`,
+      databaseName: `${dbName}`,
       tableInput: {
-        name: PreprocessDynamoDBSource.name,
+        name: preProcessedDynamoDBSource.name,
         storageDescriptor: {
-          location: PreprocessDynamoDBSource.location,
+          location: preProcessedDynamoDBSource.location,
           schemaReference: {
             schemaId: {
               registryName: glueRegistry.name,
               schemaName: cfnSchema.name,
             },
-            schemaVersionNumber: PreprocessDynamoDBSource.schemaVerisonNumber,
+            schemaVersionNumber: preProcessedDynamoDBSource.schemaVerisonNumber,
           },
           inputFormat: 'org.apache.hadoop.mapred.TextInputFormat',
           outputFormat:
@@ -138,18 +152,11 @@ export const Glue = (
 
   new glue.CfnTable(
     stack,
-    `${stackPrefixes.dataInfra}-table-${PreprocessDynamoDBSource.name}`,
+    `${stackPrefixes.dataInfra}-table-postprocessed-${postProcessedDataSource.tableConfig.tableInput.name}`,
     {
-      catalogId: stack.account,
-      databaseName: dbName,
-      tableInput: {
-        name: PreprocessDynamoDBSource.name,
-        tableType: 'EXTERNAL_TABLE',
-        storageDescriptor: cleanedTables.name,
-      },
-      openTableFormatInput: {
-        ...openTableFormatInputProperty,
-      },
+      catalogId: `${stack.account}`,
+      databaseName: `${dbName}`,
+      ...postProcessedDataSource.tableConfig,
     }
   );
 

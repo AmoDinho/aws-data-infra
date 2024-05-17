@@ -1,4 +1,4 @@
-const cleanedDealershipSchema = [
+export const cleanedDealershipSchema = [
   {
     name: 'pk',
     type: 'string',
