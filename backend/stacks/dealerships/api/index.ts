@@ -1,15 +1,15 @@
 import { Api } from 'sst/constructs';
 import { Construct } from 'constructs';
-export interface IServiceOneAPIResource {
-  ServiceOneAPI: Api;
+export interface IDealershipsIResource {
+  DealershipsAPI: Api;
 }
 
-const ServiceOneAPI = (Stack: Construct): Api => {
-  const ServiceOneAPI = new Api(Stack, `ServiceOne-stack-api`, {
+const DealershipsAPI = (Stack: Construct): Api => {
+  const DealershipsAPI = new Api(Stack, `Dealerships-stack-api`, {
     routes: {
       'POST /dealerships-graphql': {
         type: 'graphql',
-        function: 'backend/dealerships/__graphql/index.handler',
+        function: 'packages/dealerships/__graphql/index.handler',
       },
       // pothos: {
       //   schema: 'packages/ServiceOne/__graphql/schema.ts',
@@ -26,13 +26,13 @@ const ServiceOneAPI = (Stack: Construct): Api => {
     },
   });
 
-  return ServiceOneAPI;
+  return DealershipsAPI;
 };
 
-const ServiceOneResourcesAPI = (stack: Construct): IServiceOneAPIResource => {
+const DealershipsResourcesAPI = (stack: Construct): IDealershipsIResource => {
   return {
-    ServiceOneAPI: ServiceOneAPI(stack),
+    DealershipsAPI: DealershipsAPI(stack),
   };
 };
 
-export default ServiceOneResourcesAPI;
+export default DealershipsResourcesAPI;

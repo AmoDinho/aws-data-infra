@@ -1,5 +1,5 @@
 import { StackContext } from 'sst/constructs';
-// import ServiceOneResourcesAPI from './api';
+import DealershipsResourcesAPI from './api';
 import DealershipsResoucesDynamoDB from './database';
 // import ServiceOneResourceS3 from './storage';
 /*
@@ -16,20 +16,20 @@ Infra to add:
 
 */
 const DealershipStack = ({ stack }: StackContext) => {
-  // const serviceOneResourcesAPI = ServiceOneResourcesAPI(stack);
+  const dealershipsResourcesAPI = DealershipsResourcesAPI(stack);
   const dealershipsResoucesDynamoDB = DealershipsResoucesDynamoDB(stack);
   // const serviceOneResourcesS3 = ServiceOneResourceS3(stack);
 
-  // stack.addOutputs({
-  //   BoatsAPIEndpoint: serviceOneResourcesAPI.ServiceOneAPI.url,
-  // });
+  stack.addOutputs({
+    BoatsAPIEndpoint: dealershipsResourcesAPI.DealershipsAPI.url,
+  });
   // stack.addOutputs({
   //   BoatsS3Bucket:
   //     serviceOneResourcesS3.ServiceOneBucket.serviceOneBucket.bucketName,
   // });
   return {
     // serviceOneResourcesAPI,
-    // serviceOneResourcesS3,
+    dealershipsResourcesAPI,
     dealershipsResoucesDynamoDB,
   };
 };

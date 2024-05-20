@@ -8,7 +8,7 @@ export interface IPipeline {
 // this will trigger athena to update the tables with new export data
 export const PipelineEventHandler = ({ stack }: StackContext): Function => {
   return new Function(stack, `${stackPrefixes.dataInfra}-pipe-event-handler`, {
-    handler: 'backend/warehouse/pipeline/index.PipelineEventHandler',
+    handler: 'packages/warehouse/pipeline/index.PipelineEventHandler',
     permissions: [
       'sts:AssumeRole',
       'events:PutEvents',
@@ -23,7 +23,7 @@ export const PipelineEventHandler = ({ stack }: StackContext): Function => {
 const RunPipelineCron = ({ stack }: StackContext): Cron => {
   const cron = new Cron(stack, `${stackPrefixes.dataInfra}-pipeline-cron`, {
     schedule: 'rate(1 hour)',
-    job: 'backend/warehouse/pipeline/index.RunPipelineCron',
+    job: 'packages/warehouse/pipeline/index.RunPipelineCron',
   });
   cron.attachPermissions([
     'sts:AssumeRole',

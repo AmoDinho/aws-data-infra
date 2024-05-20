@@ -44,7 +44,7 @@ export const AthenaWorkGroup = (
 
 const AthenaNotificationHandler = ({ stack }: StackContext): Function => {
   return new Function(stack, `${stackPrefixes.dataInfra}-queryprocess-athena`, {
-    handler: `backend/warehouse/athena/index.handler`,
+    handler: `packages/warehouse/athena/index.handler`,
     permissions: ['athena:*', 's3:*', 'glue:*'],
   });
 };

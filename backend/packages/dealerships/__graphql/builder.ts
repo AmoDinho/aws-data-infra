@@ -1,7 +1,7 @@
 import SchemaBuilder from '@pothos/core';
 import { ICar } from '../types';
-import getBoats from '../src/getBoats';
-import getABoat from '../src/getABoat';
+import getCars from 'src/getBoats';
+
 export const builder = new SchemaBuilder({});
 
 const ICarGQL = builder.objectRef<ICar>('ICar');
@@ -34,20 +34,20 @@ builder.queryType({
     getCars: t.field({
       description: 'Get cars',
       type: [ICarGQL],
-      resolve: () => getBoats(),
+      resolve: () => getCars(),
     }),
-    getABoat: t.field({
-      description: 'Get A Baot ',
-      type: [IBoatGQL],
-      args: {
-        boat_id: t.arg({
-          type: 'String',
-          description: 'Boat ID',
-          required: true,
-        }),
-      },
-      resolve: (root, args) => getABoat({ boat_id: args.boat_id }),
-    }),
+    // getABoat: t.field({
+    //   description: 'Get A Baot ',
+    //   type: [IBoatGQL],
+    //   args: {
+    //     boat_id: t.arg({
+    //       type: 'String',
+    //       description: 'Boat ID',
+    //       required: true,
+    //     }),
+    //   },
+    //   resolve: (root, args) => getABoat({ boat_id: args.boat_id }),
+    // }),
   }),
 });
 // builder.mutationType({});

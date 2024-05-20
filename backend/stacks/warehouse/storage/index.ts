@@ -19,7 +19,7 @@ export const WarehouseBucket = ({
       objectCreatedNotification: {
         function: {
           handler:
-            'backend/warehouse/storage/index.objectCreatedNotificationHandler',
+            'packages/warehouse/storage/index.objectCreatedNotificationHandler',
           permissions: ['events:PutEvents', 's3:*'],
         },
         events: ['object_created'],
