@@ -1,5 +1,5 @@
 import { TableResources, Table } from 'sst/node/table';
-import { ICars } from '../types';
+import { ICars } from '../types/index.js';
 import Dynamo from '@my-sst-app/core/aws.dynamo';
 interface DealershipTable extends TableResources {
   dealership_table: {
@@ -7,11 +7,11 @@ interface DealershipTable extends TableResources {
   };
 }
 
-const DEALERSHIP_TABLE = (Table as DealershipTable).dealership_table.tableName;
+// const DEALERSHIP_TABLE = (Table as DealershipTable).dealership_table.tableName;
 const getCars = async (): Promise<Array<ICars>> => {
   try {
     const params = {
-      TableName: DEALERSHIP_TABLE,
+      TableName: 'local-aws-data-infra-dealerships-table',
       Limit: 100,
       ExclusiveStartKey: undefined,
     };

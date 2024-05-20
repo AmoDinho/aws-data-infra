@@ -5,7 +5,7 @@ export interface IDealershipsIResource {
 }
 
 const DealershipsAPI = (Stack: Construct): Api => {
-  const DealershipsAPI = new Api(Stack, `Dealerships-stack-api`, {
+  const DealershipsAPI = new Api(Stack, `dealerships-stack-api`, {
     routes: {
       'POST /dealerships-graphql': {
         type: 'graphql',
@@ -25,6 +25,8 @@ const DealershipsAPI = (Stack: Construct): Api => {
       },
     },
   });
+
+  DealershipsAPI.attachPermissions(['dynamodb:*']);
 
   return DealershipsAPI;
 };
