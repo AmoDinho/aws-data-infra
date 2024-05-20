@@ -4,7 +4,7 @@ const dealershipSchema = (baseKey: string) => {
     title: 'Generated schema for Root',
     type: 'object',
     properties: {
-      [baseKey]: {
+      dealerships: {
         type: 'object',
         properties: {
           pk: {

@@ -40,17 +40,17 @@ export const Glue = (
   const warehousesStorageBucket = `s3://${storage.WarehouseBucket.bucketName}`;
 
   const preProcessedDynamoDBSource = {
-    name: 'dealership',
+    name: 'pre-dealership',
     mainName: 'dealership',
     location: `${warehousesStorageBucket}/preprocessed/exports/dealerships/_latest/data/`,
-    schema: dealershipSchema('newimage'),
+    schema: dealershipSchema('newimage').properties.dealerships,
     schemaVerisonNumber: 1,
   };
 
   const postProcessedDataSource = {
     tableConfig: {
       tableInput: {
-        name: 'dealership',
+        name: 'post-dealership',
         tableType: 'EXTERNAL_TABLE',
         storageDescriptor: {
           location: `${warehousesStorageBucket}/athena/cleaned/dealerships`,
