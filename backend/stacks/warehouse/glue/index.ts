@@ -1,3 +1,8 @@
+/*
+Fix issuue the schema being passed
+
+*/
+
 import { aws_glue as glue } from 'aws-cdk-lib';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import { StackContext, Config } from 'sst/constructs';
