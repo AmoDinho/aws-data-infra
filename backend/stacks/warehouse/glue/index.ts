@@ -48,7 +48,7 @@ export const Glue = (
     name: 'pre-dealership',
     mainName: 'dealership',
     location: `${warehousesStorageBucket}/preprocessed/exports/dealerships/_latest/data/`,
-    schema: dealershipSchema('newimage').properties.dealerships,
+    schema: dealershipSchema('newimage'),
     schemaVerisonNumber: 1,
   };
 
