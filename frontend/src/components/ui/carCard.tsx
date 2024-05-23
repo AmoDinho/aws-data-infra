@@ -1,6 +1,14 @@
 import { ICarCardProps } from '../../types';
 import { Card, CardHeader, CardContent } from './card';
 import placeholder from '@/assets/placeholder.svg';
+import { Money } from '../icons';
+
+const CardLineItem = ({ Icon, lineItem }) => (
+  <div className="flex flex-row">
+    <Icon />
+    <p className="text-gray-500">{lineItem}</p>
+  </div>
+);
 export const CarCard = ({
   title,
   sold_by,
@@ -8,6 +16,28 @@ export const CarCard = ({
   milage,
   price,
 }: ICarCardProps) => {
+  const lineItems = [
+    {
+      Icon: Money,
+      lineItem: title,
+    },
+    {
+      Icon: Money,
+      lineItem: price,
+    },
+    {
+      Icon: Money,
+      lineItem: sold_by,
+    },
+    {
+      Icon: Money,
+      lineItem: dealership_name,
+    },
+    {
+      Icon: Money,
+      lineItem: milage,
+    },
+  ];
   return (
     <Card>
       <CardHeader>
@@ -15,11 +45,13 @@ export const CarCard = ({
       </CardHeader>
       <CardContent>
         <div className="p-4">
-          <h3 className="text-lg font-bold">{title}</h3>
-          <p className="text-gray-500">{price}</p>
-          <p className="text-gray-500">{sold_by}</p>
-          <p className="text-2xl font-bold">{dealership_name}</p>
-          <p className="text-gray-500">{milage}</p>
+          {lineItems.map((item, itemIdx) => (
+            <CardLineItem
+              Icon={item.Icon}
+              key={itemIdx}
+              lineItem={item.lineItem}
+            />
+          ))}
         </div>
       </CardContent>
     </Card>
