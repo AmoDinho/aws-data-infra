@@ -7,7 +7,7 @@ const useGetCars = (): IUseGetCarsResponse => {
   return {
     loading,
     error,
-    data,
+    data: data.getCars,
   };
 };
 
