@@ -1,5 +1,6 @@
 import { ICarCardProps } from '../../types';
 import { Card, CardHeader, CardContent } from './card';
+import placeholder from '@/assets/placeholder.svg';
 export const CarCard = ({
   title,
   sold_by,
@@ -10,7 +11,7 @@ export const CarCard = ({
   return (
     <Card>
       <CardHeader>
-        <img src="../assets/placeholder.svg" />
+        <img src={placeholder} />
       </CardHeader>
       <CardContent>
         <div className="p-4">
