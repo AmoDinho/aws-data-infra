@@ -1,11 +1,11 @@
 import { ICarCardProps } from '../../types';
 import { Card, CardHeader, CardContent } from './card';
 import placeholder from '@/assets/placeholder.svg';
-import { Money } from '../icons';
+import { Money, Building, Clock, User } from '../icons';
 
 const CardLineItem = ({ Icon, lineItem }) => (
   <div className="flex flex-row">
-    <Icon />
+    {Icon ? <Icon /> : <></>}
     <p className="text-gray-500">{lineItem}</p>
   </div>
 );
@@ -18,7 +18,7 @@ export const CarCard = ({
 }: ICarCardProps) => {
   const lineItems = [
     {
-      Icon: Money,
+      Icon: '',
       lineItem: title,
     },
     {
@@ -26,15 +26,15 @@ export const CarCard = ({
       lineItem: price,
     },
     {
-      Icon: Money,
+      Icon: User,
       lineItem: sold_by,
     },
     {
-      Icon: Money,
+      Icon: Building,
       lineItem: dealership_name,
     },
     {
-      Icon: Money,
+      Icon: Clock,
       lineItem: milage,
     },
   ];
