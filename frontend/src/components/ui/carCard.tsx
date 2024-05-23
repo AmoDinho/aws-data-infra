@@ -3,10 +3,10 @@ import { Card, CardHeader, CardContent } from './card';
 import placeholder from '@/assets/placeholder.svg';
 import { Money, Building, Clock, User } from '../icons';
 
-const CardLineItem = ({ Icon, lineItem }) => (
-  <div className="flex flex-row">
+const CardLineItem = ({ Icon, lineItem, additionalClassNames }) => (
+  <div className="flex flex-row mb-2">
     {Icon ? <Icon /> : <></>}
-    <p className="text-gray-500">{lineItem}</p>
+    <p className={`text-gray-500 ${additionalClassNames}`}>{lineItem}</p>
   </div>
 );
 export const CarCard = ({
@@ -20,14 +20,18 @@ export const CarCard = ({
     {
       Icon: '',
       lineItem: title,
+      additionalClassNames: 'text-lg font-bold ',
     },
-    {
-      Icon: Money,
-      lineItem: price,
-    },
+
     {
       Icon: User,
       lineItem: sold_by,
+      additionalClassNames: 'text-gray-500',
+    },
+    {
+      Icon: Money,
+      lineItem: `ZAR ${price}`,
+      additionalClassNames: 'text-2xl font-bold',
     },
     {
       Icon: Building,
@@ -35,7 +39,7 @@ export const CarCard = ({
     },
     {
       Icon: Clock,
-      lineItem: milage,
+      lineItem: `${milage} Kms`,
     },
   ];
   return (
@@ -50,6 +54,7 @@ export const CarCard = ({
               Icon={item.Icon}
               key={itemIdx}
               lineItem={item.lineItem}
+              additionalClassNames={item.additionalClassNames}
             />
           ))}
         </div>
