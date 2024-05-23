@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       {loading && <SkeletonCard />}
-      <div className="grid grid-cols-3">
+      <div className="grid xl:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-5 p-5">
         {data &&
           data.map((car, carId) => (
             <CarCard
