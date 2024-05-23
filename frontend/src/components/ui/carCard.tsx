@@ -1,9 +1,13 @@
-import { ICarCardProps } from '../../types';
+import { ICarCardProps, ICardLineItemProps } from '../../types';
 import { Card, CardHeader, CardContent } from './card';
 import placeholder from '@/assets/placeholder.svg';
 import { Money, Building, Clock, User } from '../icons';
 
-const CardLineItem = ({ Icon, lineItem, additionalClassNames }) => (
+const CardLineItem = ({
+  Icon,
+  lineItem,
+  additionalClassNames,
+}: ICardLineItemProps) => (
   <div className="flex flex-row mb-2">
     {Icon ? <Icon /> : <></>}
     <p className={`text-gray-500 ${additionalClassNames}`}>{lineItem}</p>
@@ -18,7 +22,7 @@ export const CarCard = ({
 }: ICarCardProps) => {
   const lineItems = [
     {
-      Icon: '',
+      Icon: null,
       lineItem: title,
       additionalClassNames: 'text-lg font-bold ',
     },
@@ -54,7 +58,7 @@ export const CarCard = ({
               Icon={item.Icon}
               key={itemIdx}
               lineItem={item.lineItem}
-              additionalClassNames={item.additionalClassNames}
+              additionalClassNames={item?.additionalClassNames}
             />
           ))}
         </div>

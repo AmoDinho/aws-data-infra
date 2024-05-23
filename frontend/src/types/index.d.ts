@@ -35,3 +35,9 @@ export interface ICarCardProps {
   milage: number;
   price: number;
 }
+
+export interface ICardLineItemProps {
+  Icon?: React.FC | null;
+  lineItem: string | number;
+  additionalClassNames?: string;
+}
