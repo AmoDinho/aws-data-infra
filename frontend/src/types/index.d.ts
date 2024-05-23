@@ -1,3 +1,5 @@
+import { ApolloError } from '@apollo/client';
+
 export interface ICar {
   pk: string;
   sk: string;
@@ -18,4 +20,10 @@ export interface ICar {
   created_at: string;
   updated_at: string;
   milage: number;
+}
+
+export interface IUseGetCarsResponse {
+  loading: boolean;
+  error: ApolloError | undefined;
+  data: Array<ICar>;
 }
