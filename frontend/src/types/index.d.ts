@@ -27,3 +27,11 @@ export interface IUseGetCarsResponse {
   error: ApolloError | undefined;
   data: Array<ICar>;
 }
+
+export interface ICarCardProps {
+  title: string;
+  sold_by: string;
+  dealership_name: string;
+  milage: number;
+  price: number;
+}
