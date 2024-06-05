@@ -28,6 +28,7 @@
     "@aws-sdk/lib-dynamodb": "^3.319.0",
     "@aws-sdk/s3-request-presigner": "^3.319.0",
     "@genql/cli": "^3.0.5",
-    "@pothos/core": "^3.29.0"
+    "@pothos/core": "^3.29.0",
+    "crypto": "^1.0.1"
   }
 }

@@ -12,3 +12,15 @@ export interface ISignedURLParam {
   ContentType?: 'application/json' | 'application/pdf';
   Expires: number;
 }
+
+export interface IExportTableToPointInTimeInput {
+  PipelineId?: string;
+  TableArn: string;
+  S3Bucket: string;
+  S3BucketOwner: string;
+  S3Prefix: string;
+  IncrementalExportSpecification?: {
+    ExportFromTime: Date;
+    ExportToTime: Date;
+  };
+}

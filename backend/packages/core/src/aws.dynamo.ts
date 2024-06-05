@@ -21,8 +21,12 @@ import {
   ScanCommandInput,
   ScanCommand,
   ScanCommandOutput,
+  ExportTableToPointInTimeCommand,
+  ExportTableToPointInTimeCommandInput,
+  ExportTableToPointInTimeOutput,
 } from '@aws-sdk/lib-dynamodb';
 import { RecordScalar, ScalarType } from '../types';
+import { IExportTableToPointInTimeInput } from '../types/index';
 
 export const dynamoClient = new DynamoDBClient({});
 export const DynamoDbDocument = DynamoDBDocumentClient.from(dynamoClient);
@@ -52,6 +56,31 @@ const Dynamo = {
   },
   scanItemsV2: async (input: ScanCommandInput): Promise<ScanCommandOutput> => {
     return DynamoDbDocument.send(new ScanCommand(input));
+  },
+  ExportTableToPointInTime: async (
+    input: IExportTableToPointInTimeInput
+  ): Promise<ExportTableToPointInTimeOutput> => {
+    let Input: ExportTableToPointInTimeCommandInput;
+    const ExportTime = new Date();
+    const ExportTimeISO = ExportTime.toISOString();
+    const ExportTimeDayISO = ExportTimeISO.slice().slice(0, 10);
+
+    const S3prefix = `${
+      input.S3Prefix
+    }/${ExportTimeDayISO}/ExportTime:${ExportTimeISO}:PipelineId:${
+      input.PipelineId || ''
+    }`;
+    Input = {
+      ...input,
+      ExportTime,
+      S3Prefix: S3prefix,
+      ExportType: 'FULL_EXPORT',
+      ExportFormat: 'DYNAMODB_JSON',
+    };
+    const response = await DynamoDBClient.send(
+      new ExportTableToPointInTimeCommand(Input)
+    );
+    return response as ExportTableToPointInTimeOutput;
   },
 };
 

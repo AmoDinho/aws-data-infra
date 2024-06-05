@@ -1,1 +1,1 @@
-export const objectCreatedNotificationHandler = () => {};
+export const objectCreatedNotificationHandler = async () => {};
