@@ -3,8 +3,8 @@ const eventSources = {
 };
 
 const eventDetailTypes = {
-  run_pipeline: '',
-  SourceDealershipFull: '',
+  run_pipeline: 'run_preprocessed_pipeline',
+  SourceDealershipFull: 'SourceDealershipFull',
 };
 
 export { eventDetailTypes, eventSources };

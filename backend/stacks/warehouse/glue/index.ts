@@ -115,6 +115,7 @@ export const Glue = (
     },
   };
 
+  console.log('schemaProps', schemaProps.schemaDefinition);
   const cfnSchema = new glue.CfnSchema(
     stack,
     `${stackPrefixes.dataInfra}-schema-${preProcessedDynamoDBSource.name}`,
