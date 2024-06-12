@@ -22,7 +22,7 @@ export const PipelineEventHandler = ({ stack }: StackContext): Function => {
 //this will tell dynamo to export the data to an s3 bucket
 const RunPipelineCron = ({ stack }: StackContext): Cron => {
   const cron = new Cron(stack, `${stackPrefixes.dataInfra}-pipeline-cron`, {
-    schedule: 'rate(1 hour)',
+    schedule: 'rate(1 mintue)',
     job: 'packages/warehouse/pipeline/index.RunPipelineCron',
   });
   cron.attachPermissions([

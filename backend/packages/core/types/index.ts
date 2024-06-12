@@ -1,3 +1,6 @@
+import { BucketResources } from 'sst/node/bucket';
+import { ConfigTypes } from 'sst/node/config';
+
 export type ScalarType<T = void> =
   | string
   | number
@@ -17,10 +20,19 @@ export interface IExportTableToPointInTimeInput {
   PipelineId?: string;
   TableArn: string;
   S3Bucket: string;
-  S3BucketOwner: string;
   S3Prefix: string;
   IncrementalExportSpecification?: {
     ExportFromTime: Date;
     ExportToTime: Date;
   };
+}
+
+export interface WarehouseBucket extends BucketResources {
+  dealership_warehouse_bucket: {
+    bucketName: string;
+  };
+}
+
+export interface DealershipsTableARN extends ConfigTypes {
+  dealerships_table_arn: string;
 }

@@ -1,5 +1,5 @@
 import Dynamo from '../core/src/aws.dynamo.js';
-import { IExportTableToPointInTimeInput } from '../../core/types/index.js';
+import { IExportTableToPointInTimeInput } from '../core/types';
 import crypto from 'crypto';
 export const RunPipelineCron = async () => {
   // generate pipeline ID
@@ -14,6 +14,8 @@ export const RunPipelineCron = async () => {
   };
   try {
     const respone = await Dynamo.ExportTableToPointInTime(input);
+    console.log('response', respone);
+    return respone;
   } catch (e) {
     return e;
   }
