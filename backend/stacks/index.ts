@@ -5,7 +5,7 @@ import Bus from './eventBus';
 import { Pipeline } from './warehouse/pipeline';
 export function stack(stackContext: StackContext) {
   const warehouse = Warehouse(stackContext);
-  const pipeline = Pipeline(stackContext);
+  const pipeline = Pipeline(stackContext, warehouse);
   /// Bind the finctions that will write to s3 & glue tables
 
   const eventBusName = `${stackPrefixes.dataInfra}-bus-${stackContext.app.stage}`;
@@ -18,6 +18,7 @@ export function stack(stackContext: StackContext) {
   );
   stackContext.stack.addDefaultFunctionBinding([eventBusNameParameter]);
 
+  warehouse.Warehouse.WarehouseBucket.bind([pipeline.RunPipelineCron]);
   pipeline.RunPipelineCron.bind([
     warehouse.Warehouse.WarehouseBucket,
     warehouse.Glue.GlueDBName,

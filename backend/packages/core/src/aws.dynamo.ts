@@ -1,4 +1,9 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import {
+  DynamoDBClient,
+  ExportTableToPointInTimeCommand,
+  ExportTableToPointInTimeCommandInput,
+  ExportTableToPointInTimeOutput,
+} from '@aws-sdk/client-dynamodb';
 import {
   DynamoDBDocumentClient,
   GetCommand,
@@ -21,9 +26,6 @@ import {
   ScanCommandInput,
   ScanCommand,
   ScanCommandOutput,
-  ExportTableToPointInTimeCommand,
-  ExportTableToPointInTimeCommandInput,
-  ExportTableToPointInTimeOutput,
 } from '@aws-sdk/lib-dynamodb';
 import { RecordScalar, ScalarType } from '../types';
 import { IExportTableToPointInTimeInput } from '../types/index';

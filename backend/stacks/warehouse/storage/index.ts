@@ -26,6 +26,7 @@ export const WarehouseBucket = ({
       },
     },
   });
+  stack.addDefaultFunctionBinding([WarehouseBucket]);
   return {
     WarehouseBucket,
   };

@@ -1,5 +1,7 @@
 import { Cron, Function, StackContext } from 'sst/constructs';
 import stackPrefixes from '../../stackPrefixes';
+import { IWarehouseBucket } from '../storage';
+
 export interface IPipeline {
   PipelineEventHandler: Function;
   RunPipelineCron: Cron;
@@ -20,11 +22,15 @@ export const PipelineEventHandler = ({ stack }: StackContext): Function => {
 };
 
 //this will tell dynamo to export the data to an s3 bucket
-const RunPipelineCron = ({ stack }: StackContext): Cron => {
+const RunPipelineCron = (
+  { stack }: StackContext,
+  storage: IWarehouseBucket
+): Cron => {
   const cron = new Cron(stack, `${stackPrefixes.dataInfra}-pipeline-cron`, {
-    schedule: 'rate(1 mintue)',
-    job: 'packages/warehouse/pipeline/index.RunPipelineCron',
+    schedule: 'rate(1 minute)',
+    job: 'packages/pipeline/index.RunPipelineCron',
   });
+  cron.bind([storage.WarehouseBucket]);
   cron.attachPermissions([
     'sts:AssumeRole',
     'events:PutEvents',
@@ -35,9 +41,9 @@ const RunPipelineCron = ({ stack }: StackContext): Cron => {
   return cron;
 };
 
-export const Pipeline = (stackContext: StackContext): IPipeline => {
+export const Pipeline = (stackContext: StackContext, storage): IPipeline => {
   return {
-    RunPipelineCron: RunPipelineCron(stackContext),
+    RunPipelineCron: RunPipelineCron(stackContext, storage),
     PipelineEventHandler: PipelineEventHandler(stackContext),
   };
 };
